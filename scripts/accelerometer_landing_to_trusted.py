@@ -29,6 +29,9 @@ customer_trusted_node1747429831295 = glueContext.create_dynamic_frame.from_catal
 # Script generated for node Join
 Join_node1747430219554 = Join.apply(frame1=accelerometer_landing_node1747429744512, frame2=customer_trusted_node1747429831295, keys1=["user"], keys2=["email"], transformation_ctx="Join_node1747430219554")
 
+# Script generated for node Drop Fields
+DropFields_node1747434290785 = DropFields.apply(frame=Join_node1747430219554, paths=["email", "phone", "birthday", "serialnumber", "registrationdate", "lastupdatedate", "sharewithresearchasofdate", "sharewithpublicasofdate", "sharewithfriendsasofdate", "customername"], transformation_ctx="DropFields_node1747434290785")
+
 # Script generated for node Amazon S3
 EvaluateDataQuality().process_rows(frame=Join_node1747430219554, ruleset=DEFAULT_DATA_QUALITY_RULESET, publishing_options={"dataQualityEvaluationContext": "EvaluateDataQuality_node1747429735665", "enableDataQualityResultsPublishing": True}, additional_options={"dataQualityResultsPublishing.strategy": "BEST_EFFORT", "observations.scope": "ALL"})
 AmazonS3_node1747430348211 = glueContext.getSink(path="s3://udacity-project-work-yw/accelerometer/trusted/", connection_type="s3", updateBehavior="UPDATE_IN_DATABASE", partitionKeys=[], compression="gzip", enableUpdateCatalog=True, transformation_ctx="AmazonS3_node1747430348211")
